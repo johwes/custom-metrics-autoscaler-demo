@@ -6,8 +6,6 @@ metadata:
 spec:
   secretTargetRef:
   - parameter: bearerToken
-    name: thanos-token-tbj5s     ### <--- update this token to your own
-    key: token
-  - parameter: ca
-    name: thanos-token-tbj5s     ### <--- update this token to your own
-    key: ca.crt
+    name: thanos-bt-secret     ### <--- update this token to your own
+    key: bearerToken
+

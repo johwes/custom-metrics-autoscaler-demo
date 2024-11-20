@@ -11,8 +11,11 @@ Red Hat Custom Metrics Autoscaler is based on the upstream open source [Kubernet
 
 ## 1. Deploy demo application
 
-From the Developer perspective, create a new Project.  In our demo, we'll create a project named `my-project`.
-From +Add on the left, navigate to Developer Catalog -> All services -> Apache HTTP Server (Templates) -> Instantiate Template.  You can use all the default values and press Create.
+```
+oc create deployment simple-webpage --image=quay.io/jwesterl/simple-webpage --port=8080
+oc expose deployment/simple-webpage
+oc expose service/simple-webpage
+```
 
 ## 2. Install operator
 
@@ -27,17 +30,7 @@ Create a serviceaccount named thanos, add the `cluster-monitoring-view` clusterr
 $ oc project my-project
 $ oc create sa thanos
 $ oc adm policy add-cluster-role-to-user cluster-monitoring-view -z thanos
-$ oc describe sa thanos
-Name:                thanos
-Namespace:           my-project
-Labels:              <none>
-Annotations:         <none>
-Image pull secrets:  thanos-dockercfg-rm6fj
-Mountable secrets:   thanos-dockercfg-rm6fj
-                     thanos-token-v6cw7
-Tokens:              thanos-token-tbj5s     ### <--- use this token
-                     thanos-token-v6cw7
-Events:              <none>
+oc create secret generic thanos-bt-secret --from-literal=bearerToken=$(oc create token thanos --duration=8760h)
 ```
 
 Create a project scoped [TriggerAuthentication] using the definition provided and replacing the token secret with your own.  You can alternately use a cluster scoped ClusterTriggerAuthentication (not covered in this demo).
@@ -55,15 +48,15 @@ $ oc apply -f resources/scaledobject.yaml
 Now let's generate some application load.  Open another terminal and run the following, substituting the route name with your own:
 
 ```
-$ oc get route -n my-project
-$ while true; do curl -I http://httpd-example-my-project.apps.<your-cluster-name>; done
+URL=$(oc get route simple-webpage -o jsonpath='{.spec.host}')
+while true; do curl -I http://$URL; done
 ```
 
 The Prometheus query that was used is `sum(rate(haproxy_backend_connections_total{route="httpd-example"}[2m]))`, 
 
 Let's observe the application scaling real time.  From the Administrator perspective -> Observe -> Metrics, use `sum(rate(haproxy_backend_connections_total{route="httpd-example"}[2m]))` as the expression and press Run queries.  This was the query provided in the ScaledObject and represents the number of concurrent haproxy backend connections for the `httpd-example` route, averaged over the past 2 minutes.  For those stepping through this demo and using [OpenShift's built-in monitoring stack], this is a perfect place to try various Prometheus queries and determine relevant metrics for your own application.
 
-  The threshold of this query is set to '5' in the demo.  In other words, based on the number of concurrent haproxy backend connections over the past 2 minutes, it will spin up another pod replica for every count of 5.  From the top right, change the refresh to every 15 seconds and observe the value over time.
+  The threshold of this query is set to '1' in the demo.  In other words, based on the number of concurrent haproxy backend connections over the past 2 minutes, it will spin up another pod replica for every count of 1.  From the top right, change the refresh to every 15 seconds and observe the value over time.
 
 From your terminal, watch the application pod replicas:
 ```
@@ -84,7 +77,7 @@ $ oc get events -n my-project
 
 GPLv3
 
-## Author
+## (Original) Author
 
 Kevin Chung
 
