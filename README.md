@@ -12,9 +12,9 @@ Red Hat Custom Metrics Autoscaler is based on the upstream open source [Kubernet
 ## 1. Deploy demo application
 
 ```
-oc create deployment simple-webpage --image=quay.io/jwesterl/simple-webpage --port=8080
-oc expose deployment/simple-webpage
-oc expose service/simple-webpage
+$ oc create deployment simple-webpage --image=quay.io/jwesterl/simple-webpage --port=8080
+$ oc expose deployment/simple-webpage
+$ oc expose service/simple-webpage
 ```
 
 ## 2. Install operator
@@ -30,7 +30,7 @@ Create a serviceaccount named thanos, add the `cluster-monitoring-view` clusterr
 $ oc project my-project
 $ oc create sa thanos
 $ oc adm policy add-cluster-role-to-user cluster-monitoring-view -z thanos
-oc create secret generic thanos-bt-secret --from-literal=bearerToken=$(oc create token thanos --duration=8760h)
+$ oc create secret generic thanos-bt-secret --from-literal=bearerToken=$(oc create token thanos --duration=8760h)
 ```
 
 Create a project scoped [TriggerAuthentication] using the definition provided and replacing the token secret with your own.  You can alternately use a cluster scoped ClusterTriggerAuthentication (not covered in this demo).
