@@ -17,7 +17,7 @@ On the Install Operator page, ensure that the Operator recommended namespace opt
 
 Click Install.
 
-## 3. Create a "VerticalPodAutoscaler" object using the recommender setting
+## 3. Create a "VerticalPodAutoscaler" object using the recommender setting or Auto setting depending if you want the VPA controller to automatically change the resource requests of the pods or not.
 ```
-oc apply -f vpa.yaml
+oc apply -f vpa-recommender.yaml
 ```
