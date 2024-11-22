@@ -1,3 +1,6 @@
+## Intro
+This short README shows how to deploy a simple app and use the VerticalPodAutoscaler (VPA) to either automatically apply resource requests (requests/limits) or have VPA only recommend requests/limits.
+
 ## 1. Deploy demo application
 
 ```
