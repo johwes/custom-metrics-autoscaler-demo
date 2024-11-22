@@ -1,6 +1,6 @@
 ## Intro
 This short README shows how to deploy a simple app and use the VerticalPodAutoscaler (VPA) to either automatically apply resource requests (requests/limits) or have VPA only recommend requests/limits.
-
+The official documentation can be found here, [Openshift Vertical Pod Autoscaler Documentation]
 ## 1. Deploy demo application
 
 ```
@@ -35,3 +35,7 @@ You can check on the POD's and the VPA with the following commands (change the n
 $ oc describe <POD>
 $ oc describe vpa <VPA NAME>
 ```
+
+
+[Openshift Vertical Pod Autoscaler Documentation]: https://docs.openshift.com/container-platform/latest/nodes/pods/nodes-pods-vertical-autoscaler.html
+
