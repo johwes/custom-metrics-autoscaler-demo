@@ -26,7 +26,7 @@ Create a `KedaController` instance.  Default configuration values are fine.
 
 ## 3. Configure application for scaling
 
-Create a serviceaccount named thanos, add the `cluster-monitoring-view` clusterrole with project scope, and determine its token secret:
+Create a serviceaccount named thanos, add the `cluster-monitoring-view` clusterrole with project scope, and create a token and add to a secret:
 ```
 $ oc project my-project
 $ oc create sa thanos
@@ -53,7 +53,7 @@ URL=$(oc get route simple-webpage -o jsonpath='{.spec.host}')
 while true; do curl -I http://$URL; done
 ```
 
-The Prometheus query that was used is `sum(rate(haproxy_backend_connections_total{route="httpd-example"}[1m]))`, 
+The Prometheus query that was used is `sum(rate(haproxy_backend_connections_total{route="simple-webpage"}[1m]))`, 
 
 Let's observe the application scaling real time.  From the Administrator perspective -> Observe -> Metrics, use `sum(rate(haproxy_backend_connections_total{route="simple-webpage"}[1m]))` as the expression and press Run queries.  This was the query provided in the ScaledObject and represents the number of concurrent haproxy backend connections for the `simple-webpage` route, averaged over the past 2 minutes.  For those stepping through this demo and using [OpenShift's built-in monitoring stack], this is a perfect place to try various Prometheus queries and determine relevant metrics for your own application.
 
