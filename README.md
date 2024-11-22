@@ -12,6 +12,7 @@ Red Hat Custom Metrics Autoscaler is based on the upstream open source [Kubernet
 ## 1. Deploy demo application
 
 ```
+$ oc new-project my-project
 $ oc create deployment simple-webpage --image=quay.io/jwesterl/simple-webpage --port=8080
 $ oc expose deployment/simple-webpage
 $ oc expose service/simple-webpage
