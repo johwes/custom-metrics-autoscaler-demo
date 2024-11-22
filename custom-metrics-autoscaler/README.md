@@ -87,4 +87,4 @@ Kevin Chung
 [ScaledObject]: resources/scaledobject.yaml
 [Prometheus scaler]: https://keda.sh/docs/2.9/scalers/prometheus/
 [complete list of scalers]: https://keda.sh/docs/2.9/scalers/
-[OpenShift's built-in monitoring stack]: https://docs.openshift.com/container-platform/4.12/monitoring/monitoring-overview.html
+[OpenShift's built-in monitoring stack]: https://docs.openshift.com/container-platform/latest/observability/monitoring/monitoring-overview.html
