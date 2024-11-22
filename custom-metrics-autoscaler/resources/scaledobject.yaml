@@ -18,7 +18,7 @@ spec:
       namespace: my-project
       metricName: haproxy_backend_connections_total
       threshold: '1'
-      query: sum(rate(haproxy_backend_connections_total{route="php-test-git"}[1m])) # Note: query must return a vector/scalar single element response
+      query: sum(rate(haproxy_backend_connections_total{route="simple-webpage"}[1m])) # Note: query must return a vector/scalar single element response
       authModes: 'bearer'
     authenticationRef: 
       name: keda-prom-creds
