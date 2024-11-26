@@ -13,7 +13,6 @@ oc set resources deployment simple-webpage --limits=cpu=500m,memory=512Mi --requ
 
 ## 2. Create a "HorizontalPodAutoscaler"
 Create the HPA object 
-(There is also an example vpa configurationf for a DeploymentConfig)
 ```
 oc apply -f hpa.yaml
 ```
