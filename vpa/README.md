@@ -22,6 +22,7 @@ Click Install.
 
 ## 3. Create a "VerticalPodAutoscaler"
 Create the VPA object using the recommender setting or Auto setting depending if you want the VPA controller to automatically change the resource requests of the pods or not.
+(There is also an example vpa configurationf for a DeploymentConfig)
 ```
 $ oc apply -f vpa-recommender.yaml
 OR
