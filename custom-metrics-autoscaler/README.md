@@ -12,10 +12,10 @@ Red Hat Custom Metrics Autoscaler is based on the upstream open source [Kubernet
 ## 1. Deploy demo application
 
 ```
-$ oc new-project my-project
-$ oc create deployment simple-webpage --image=quay.io/jwesterl/simple-webpage --port=8080
-$ oc expose deployment/simple-webpage
-$ oc expose service/simple-webpage
+oc new-project my-project
+oc create deployment simple-webpage --image=quay.io/jwesterl/simple-webpage --port=8080
+oc expose deployment/simple-webpage
+oc expose service/simple-webpage
 ```
 
 ## 2. Install operator
@@ -28,20 +28,20 @@ Create a `KedaController` instance.  Default configuration values are fine.
 
 Create a serviceaccount named thanos, add the `cluster-monitoring-view` clusterrole with project scope, and create a token and add to a secret:
 ```
-$ oc project my-project
-$ oc create sa thanos
-$ oc adm policy add-cluster-role-to-user cluster-monitoring-view -z thanos
-$ oc create secret generic thanos-bt-secret --from-literal=bearerToken=$(oc create token thanos --duration=8760h)
+oc project my-project
+oc create sa thanos
+oc adm policy add-cluster-role-to-user cluster-monitoring-view -z thanos
+oc create secret generic thanos-bt-secret --from-literal=bearerToken=$(oc create token thanos --duration=8760h)
 ```
 
 Create a project scoped [TriggerAuthentication] using the definition provided and replacing the token secret with your own.  You can alternately use a cluster scoped ClusterTriggerAuthentication (not covered in this demo).
 ```
-$ oc apply -f resources/triggerauthentication.yaml
+oc apply -f resources/triggerauthentication.yaml
 ```
 
 Create a [ScaledObject] using the definition provided.  Note that the trigger in this definition is configured with the [Prometheus scaler].  See the upstream Keda docs for a [complete list of scalers].  Also, the Prometheus trigger uses the bearer token for authentication and references the TriggerAuthentication we just created.
 ```
-$ oc apply -f resources/scaledobject.yaml
+oc apply -f resources/scaledobject.yaml
 ```
 
 ## 4. Scaling our application
@@ -61,17 +61,17 @@ Let's observe the application scaling real time.  From the Administrator perspec
 
 From your terminal, watch the application pod replicas:
 ```
-$ watch oc get pods -n my-project
+watch oc get pods -n my-project
 ```
 
 Note that underneath the Custom Metrics Autoscaler is a `HorizontalPodAutoscaler` definition:
 ```
-$ oc get hpa -n my-project
+oc get hpa -n my-project
 ```
 
 Finally, you can also view the events to determine the resources in this demo were set up properly and scaling is actively taking place.
 ```
-$ oc get events -n my-project
+oc get events -n my-project
 ```
 
 ## License
