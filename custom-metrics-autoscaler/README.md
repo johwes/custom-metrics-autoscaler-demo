@@ -57,7 +57,7 @@ The Prometheus query that was used is `sum(rate(haproxy_backend_connections_tota
 
 Let's observe the application scaling real time.  From the Administrator perspective -> Observe -> Metrics, use `sum(rate(haproxy_backend_connections_total{route="simple-webpage"}[1m]))` as the expression and press Run queries.  This was the query provided in the ScaledObject and represents the number of concurrent haproxy backend connections for the `simple-webpage` route, averaged over the past 2 minutes.  For those stepping through this demo and using [OpenShift's built-in monitoring stack], this is a perfect place to try various Prometheus queries and determine relevant metrics for your own application.
 
-  The threshold of this query is set to '1' in the demo.  In other words, based on the number of concurrent haproxy backend connections over the past 2 minutes, it will spin up another pod replica for every count of 1.  From the top right, change the refresh to every 15 seconds and observe the value over time.
+  The threshold of this query is set to '1' in the demo.  In other words, based on the number of concurrent haproxy backend connections over the past 1 minutes, it will spin up another pod replica for every count of 1.  From the top right, change the refresh to every 15 seconds and observe the value over time.
 
 From your terminal, watch the application pod replicas:
 ```
