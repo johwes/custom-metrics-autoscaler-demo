@@ -2,7 +2,7 @@ kind: HorizontalPodAutoscaler
 apiVersion: autoscaling/v2
 metadata:
   name: hpa-cpu-simple-webpage
-  namespace: rhn-sa-jwesterl-dev
+  namespace: my-project
 spec:
   scaleTargetRef:
     kind: Deployment
